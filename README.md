@@ -1,4 +1,6 @@
 # react-native-jsonTutorial
 react-native json call and receive data tutorial 
+create request function to get data from json
 
-# Using FlatList, List, ListItem from 'react-native'
+# View
+using FlatList with List, ListItem from 'react-native'
