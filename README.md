@@ -1,5 +1,5 @@
 # react-native-jsonTutorial
-react-native json call and receive data tutorial 
+react-native json call and receive data tutorial <br>
 create request function to get data from json
 
 # View
