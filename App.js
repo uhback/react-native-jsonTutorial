@@ -6,12 +6,13 @@
 
 import React, { Component } from 'react';
 
-import FlatListDemo from './FlatListDemo'
+//import FlatListDemo from './src/Components/FlatListDemo'
+import MovieListDemo from './src/Components/MovieListDemo'
 
 export default class App extends Component {
   render() {
     return (
-      <FlatListDemo />
+      <Test />
     );
   }
 }
