@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, Image } from 'react-native';
-import { List, ListItem, SearchBar } from 'react-native-elements'
+import { View, Text, FlatList, ActivityIndicator, Image } from 'react-native';
+import { List, ListItem, SearchBar } from 'react-native-elements';
 
+import styles from '../styles/mainStyle';
+import MovieListCard from '../Components/MovieListCard';
+import { TMDB_API, TMDB_IMG_API, TMDB_API_KEY } from '../Constants/Api';
 
 class MovieListDemo extends Component {
     constructor(props) {
@@ -16,17 +19,18 @@ class MovieListDemo extends Component {
             refreshing: false,
         };
     }
-
+    
     componentDidMount() {
         this.makeRemoteRequest();
     }
 
     makeRemoteRequest = () => {
+
         const { page, seed } = this.state;
         const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=d239afcaaca8fb95d5eb2aefa1fae54f&page=${page}`;
         this.setState({ loading: true });
-        
-        // 데이터 받아와서 listview로 뿌릴 수 있도록 개발 ...
+
+
         fetch(url)
             .then(res => res.json())
             .then(resJson => {
@@ -48,8 +52,7 @@ class MovieListDemo extends Component {
                 style={{
                     height: 1,
                     width: "86%",
-                    backgroundColor: "#CED0CE",
-                    marginLeft: "14%"
+                    backgroundColor: "#CED0CE"
                 }}
             />
         );
@@ -59,10 +62,11 @@ class MovieListDemo extends Component {
         return <SearchBar placeholder="Type here..." lightTheme round />;
     };
 
+    // Activity Indicator rending
     render() {
         if(this.state.loading) {
             return (
-                <View style = {styles.container}>
+                <View style = {styles.actIndiContainer}>
                     <ActivityIndicator
                         animating={this.state.animating}
                         color='#CED0CE'
@@ -72,69 +76,48 @@ class MovieListDemo extends Component {
                 </View>
             );
         }
-        return (      
-            <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>                
-                <FlatList
-                    data={this.state.data}
-                    renderItem={({ item }) => (
-                        <ListItem
-                            roundAvatar
-                            title={item.title}
-                            subtitle={
-                                <View style={styles.cardDetails}>
-                                    <Image source={{ uri: `https://image.tmdb.org/t/p/w185/${item.poster_path}` }} style={styles.cardImage} />
-                                    <Text> {item.overview} </Text>
-                                </View>
-                            }
-                            containerStyle={{ borderBottomWidth: 0}}
-                        />
-                    )}
-                    keyExtractor={item => item.id} // having key for each items (normally database keys)
-                    ItemSeparatorComponent={this.renderSeparator}
-                    ListHeaderComponent={this.renderHeader}
-                    
-                />
-            </List>            
+        return (
+            // <FlatList
+            //     data={this.state.data}
+            //     renderItem={({ item }) => (
+            //         <ListItem
+            //             title={
+            //                 <Text style={styles.cardTitle}>{item.title}</Text>
+            //             }
+            //             subtitle={
+            //                 <View style={styles.cardDetails}>
+            //                     <View style={styles.cardImage}>
+            //                         <Image source={{ uri: `https://image.tmdb.org/t/p/w185/${item.poster_path}` }} />
+            //                     </View>
+            //                     <View style={styles.cardInfo}>
+            //                         <View style={styles.cardInfoTop}>
+            //                             <Text> {item.genre_ids[0]} </Text>
+            //                         </View>
+            //                         <View style={styles.cardInfoBottom}>
+            //                             <Text> {item.overview} </Text>
+            //                         </View>
+            //                     </View>
+            //                 </View>                        
+            //             }
+            //             //style={styles.card}
+            //             //containerStyle={{ borderBottomWidth: 0}}
+            //         />
+            //     )}
+            //     keyExtractor={item => item.id} // having key for each items (normally database keys)
+            //     ItemSeparatorComponent={this.renderSeparator}
+            //     //ListHeaderComponent={this.renderHeader}
+            // />
+            <FlatList
+                data={this.state.data}
+                renderItem={({ item }) => (
+                    <MovieListCard info={item} />
+                )}
+                keyExtractor={item => item.id} // having key for each items (normally database keys)
+                ItemSeparatorComponent={this.renderSeparator}
+            //ListHeaderComponent={this.renderHeader}
+            />
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#000000',
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    },
-    activityIndicator: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 80
-    },
-    cardImage: {
-		height: 163,
-		width: 120,
-		borderTopLeftRadius: 3,
-		borderBottomLeftRadius: 3
-    },
-    card: {
-		backgroundColor: 'white',
-		borderRadius: 3,
-		minHeight: 148,
-		flexDirection: 'row',
-		paddingRight: 16,
-        overflow: 'hidden'
-    },
-    cardDetails: {
-		paddingLeft: 10,
-        flex: 1
-    }
-});
-  
-  export default MovieListDemo;
+export default MovieListDemo;
