@@ -3,14 +3,13 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
-        marginHorizontal: 16
+//        marginHorizontal: 16
       },
     card: {
-      backgroundColor: 'black',
+      backgroundColor: '#0a0a0a',
       borderRadius: 3,
       minHeight: 148,
       flexDirection: 'row',
-      paddingRight: 16,
       overflow: 'hidden'
     },
     cardImage: {

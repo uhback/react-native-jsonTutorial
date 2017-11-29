@@ -11,7 +11,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 80
-    },    
+    },
+    headerRight: {
+        width: 40,
+        paddingRight: 15,
+    },
+    headerLeft: {
+        width: 40,
+        paddingLeft: 15,
+    }
 });
 
 export default styles;
